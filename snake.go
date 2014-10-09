@@ -19,7 +19,7 @@ func Snakecase(str string) string {
 			i++
 		}
 
-		for i < l && isU(str[i]) {
+		for i < l && isUpper(str[i]) {
 			if bi < max {
 				b[bi] = str[i]
 				bi++
@@ -59,10 +59,10 @@ func isWord(c byte) bool {
 }
 
 func isLetter(c byte) bool {
-	return isLower(c) || isU(c)
+	return isLower(c) || isUpper(c)
 }
 
-func isU(c byte) bool {
+func isUpper(c byte) bool {
 	return c >= 'A' && c <= 'Z'
 }
 
