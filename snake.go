@@ -3,54 +3,53 @@
 //
 package snakecase
 
-import "strings"
-
-// Snakecase the given `str`.
-func Snakecase(str string) string {
-	var b [1024]byte
-	max := 1024
-	l := len(str)
-	ret := ""
-	bi := 0
+// Snakecase the given string.
+func Snakecase(s string) string {
+	b := make([]byte, 0, 64)
+	l := len(s)
 	i := 0
 
+	// loop until we reached the end of the string
 	for i < l {
-		for i < l && !isWord(str[i]) {
+
+		// skip leading bytes that aren't letters or numbers
+		for i < l && !isWord(s[i]) {
 			i++
 		}
 
-		for i < l && isUpper(str[i]) {
-			if bi < max {
-				b[bi] = str[i]
-				bi++
+		if i < l && len(b) != 0 {
+			b = append(b, '_')
+		}
+
+		// Append all leading uppercase or digits
+		for i < l {
+			if c := s[i]; !isHead(c) {
+				break
+			} else {
+				b = append(b, toLower(c))
 			}
 			i++
 		}
 
-		for i < l && isPart(str[i]) {
-			if bi < max {
-				b[bi] = str[i]
-				bi++
+		// Append all trailing lowercase or digits
+		for i < l {
+			if c := s[i]; !isTail(c) {
+				break
+			} else {
+				b = append(b, c)
 			}
 			i++
 		}
-
-		for i < l && !isWord(str[i]) {
-			i++
-		}
-
-		ret += strings.ToLower(string(b[:bi])) + "_"
-		bi = 0
 	}
 
-	if len(ret) > 0 {
-		ret = ret[:len(ret)-1]
-	}
-
-	return ret
+	return string(b)
 }
 
-func isPart(c byte) bool {
+func isHead(c byte) bool {
+	return isUpper(c) || isDigit(c)
+}
+
+func isTail(c byte) bool {
 	return isLower(c) || isDigit(c)
 }
 
@@ -72,4 +71,11 @@ func isLower(c byte) bool {
 
 func isDigit(c byte) bool {
 	return c >= '0' && c <= '9'
+}
+
+func toLower(c byte) byte {
+	if isUpper(c) {
+		return c + ('a' - 'A')
+	}
+	return c
 }
