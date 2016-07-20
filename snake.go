@@ -39,7 +39,7 @@ func Snakecase(s string) string {
 			if c := s[i]; !isTail(c) {
 				break
 			} else {
-				b = append(b, toLower(c))
+				b = append(b, c)
 			}
 			i++
 		}
