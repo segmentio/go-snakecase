@@ -13,10 +13,7 @@ func Snakecase(s string) string {
 	for i < l {
 
 		// skip leading bytes that aren't letters or numbers
-		for i < l {
-			if isWord(s[i]) {
-				break
-			}
+		for i < l && !isWord(s[i]) {
 			i++
 		}
 
