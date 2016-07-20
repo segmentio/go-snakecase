@@ -27,6 +27,7 @@ func TestSnakecase(t *testing.T) {
 		{"$something%", "something"},
 		{"something.com", "something_com"},
 		{"•¶§ƒ˚foo˙∆˚¬", "foo"},
+		{"CStringRef", "cstring_ref"},
 	}
 
 	for _, sample := range samples {
