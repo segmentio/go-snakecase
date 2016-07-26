@@ -16,6 +16,6 @@ test:
       --interactive
       --name go
       --volume /var/run/docker.sock:/run/docker.sock
-      --volume ${PWD}:/go/src/${CIRCLE_REPOSITORY_URL#https://}
-      --workdir /go/src/${CIRCLE_REPOSITORY_URL#https://}
+      --volume ${PWD}:/go/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}
+      --workdir /go/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}
       segment/golang:latest
