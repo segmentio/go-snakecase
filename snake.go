@@ -18,6 +18,10 @@ func Snakecase(s string) string {
 	// if we haven't gone through all of the characters then we must need to manipulate the string
 	if idx < len(s) {
 		b := make([]byte, 0, 64)
+		// handles digit followed by an uppercase character
+		if idx > 0 && isDigit(s[idx-1]) {
+			idx--
+		}
 		b = append(b, s[:idx]...)
 
 		for idx < len(s) {
@@ -30,7 +34,7 @@ func Snakecase(s string) string {
 				b = append(b, underscorByte)
 			}
 
-			for idx < len(s) && isUpper(s[idx]) {
+			for idx < len(s) && (isUpper(s[idx]) || isDigit(s[idx])) {
 				b = append(b, toLower(s[idx]))
 				idx++
 			}
@@ -62,5 +66,8 @@ func isDigit(c byte) bool {
 }
 
 func toLower(c byte) byte {
-	return c + ('a' - 'A')
+	if isUpper(c) {
+		return c + ('a' - 'A')
+	}
+	return c
 }
