@@ -10,6 +10,7 @@ type sample struct {
 
 func TestSnakecase(t *testing.T) {
 	samples := []sample{
+		{"samPLE text", "sam_ple_text"},
 		{"sample text", "sample_text"},
 		{"sample-text", "sample_text"},
 		{"sample_text", "sample_text"},
@@ -34,11 +35,5 @@ func TestSnakecase(t *testing.T) {
 		if out := Snakecase(sample.str); out != sample.out {
 			t.Errorf("got %q from %q, expected %q", out, sample.str, sample.out)
 		}
-	}
-}
-
-func BenchmarkSnakecase(t *testing.B) {
-	for i := 0; i < t.N; i++ {
-		Snakecase("some sample text here_noething:too$amazing")
 	}
 }

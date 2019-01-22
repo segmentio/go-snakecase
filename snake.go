@@ -1,64 +1,52 @@
-//
-// Fast snake-case implementation.
-//
+// Package snakecase - Super-Fast snake-case implementation.
 package snakecase
+
+const underscorByte = '_'
 
 // Snakecase the given string.
 func Snakecase(s string) string {
-	b := make([]byte, 0, 64)
-	l := len(s)
-	i := 0
+	idx := 0
 
-	// loop until we reached the end of the string
-	for i < l {
-
-		// skip leading bytes that aren't letters or numbers
-		for i < l && !isWord(s[i]) {
-			i++
-		}
-
-		if i < l && len(b) != 0 {
-			b = append(b, '_')
-		}
-
-		// Append all leading uppercase or digits
-		for i < l {
-			if c := s[i]; !isHead(c) {
-				break
-			} else {
-				b = append(b, toLower(c))
-			}
-			i++
-		}
-
-		// Append all trailing lowercase or digits
-		for i < l {
-			if c := s[i]; !isTail(c) {
-				break
-			} else {
-				b = append(b, c)
-			}
-			i++
-		}
+	// loop through all good characters:
+	// - lowercase
+	// - digit
+	// - underscore (as long as the next character is lowercase or digit)
+	for idx < len(s) && ((isLower(s[idx]) || isDigit(s[idx])) || (s[idx] == underscorByte && idx < len(s)-1 && (isLower(s[idx+1]) || isDigit(s[idx+1])))) {
+		idx++
 	}
 
-	return string(b)
+	// if we haven't gone through all of the characters then we must need to manipulate the string
+	if idx < len(s) {
+		b := make([]byte, 0, 64)
+		b = append(b, s[:idx]...)
+
+		for idx < len(s) {
+			if !isAlphanumeric(s[idx]) {
+				idx++
+				continue
+			}
+
+			if len(b) > 0 {
+				b = append(b, underscorByte)
+			}
+
+			for idx < len(s) && isUpper(s[idx]) {
+				b = append(b, toLower(s[idx]))
+				idx++
+			}
+
+			for idx < len(s) && (isLower(s[idx]) || isDigit(s[idx])) {
+				b = append(b, s[idx])
+				idx++
+			}
+		}
+		return string(b) // return manipulated string
+	}
+	return s // no changes needed, can just borrow the string
 }
 
-func isHead(c byte) bool {
-	return isUpper(c) || isDigit(c)
-}
-
-func isTail(c byte) bool {
-	return isLower(c) || isDigit(c)
-}
-
-func isWord(c byte) bool {
-	return isLetter(c) || isDigit(c)
-}
-
-func isLetter(c byte) bool {
-	return isLower(c) || isUpper(c)
+func isAlphanumeric(c byte) bool {
+	return isLower(c) || isUpper(c) || isDigit(c)
 }
 
 func isUpper(c byte) bool {
@@ -74,8 +62,5 @@ func isDigit(c byte) bool {
 }
 
 func toLower(c byte) byte {
-	if isUpper(c) {
-		return c + ('a' - 'A')
-	}
-	return c
+	return c + ('a' - 'A')
 }
