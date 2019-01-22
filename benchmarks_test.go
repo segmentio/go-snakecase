@@ -4,69 +4,55 @@ import (
 	"testing"
 )
 
-func BenchmarkSnakecaseBorrowedLong(b *testing.B) {
+func BenchmarkUnchangedLong(b *testing.B) {
 	var s = "invite_your_customers_add_invites"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase(s)
 	}
 }
 
-func BenchmarkSnakecaseBorrowedSimple(b *testing.B) {
+func BenchmarkUnchangedSimple(b *testing.B) {
 	var s = "sample_text"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase(s)
 	}
 }
 
-func BenchmarkSnakecaseOwnedUnicode(b *testing.B) {
+func BenchmarkModifiedUnicode(b *testing.B) {
 	var s = "ß_ƒ_foo"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase(s)
 	}
 }
-func BenchmarkSnakecaseOwnedLong(b *testing.B) {
+func BenchmarkModifiedLong(b *testing.B) {
 	var s = "inviteYourCustomersAddInvites"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase(s)
 	}
 }
 
-func BenchmarkSnakecaseOwnedLongSpecialChars(b *testing.B) {
+func BenchmarkModifiedLongSpecialChars(b *testing.B) {
 	var s = "FOO:BAR$BAZ__Sample    Text___"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase(s)
 	}
 }
 
-func BenchmarkSnakecaseOwnedSimple(b *testing.B) {
+func BenchmarkModifiedSimple(b *testing.B) {
 	var s = "sample text"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase("sample text")
 	}
 }
 
-func BenchmarkSnakecaseOwnedUnicode2(b *testing.B) {
+func BenchmarkModifiedUnicode2(b *testing.B) {
 	var s = "ẞ•¶§ƒ˚foo˙∆˚¬"
-	b.ReportAllocs()
-	b.ResetTimer()
 	b.SetBytes(int64(len(s)))
 	for n := 0; n < b.N; n++ {
 		Snakecase(s)

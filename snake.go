@@ -15,38 +15,38 @@ func Snakecase(s string) string {
 		idx++
 	}
 
-	// if we haven't gone through all of the characters then we must need to manipulate the string
-	if idx < len(s) {
-		b := make([]byte, 0, 64)
-		// handles digit followed by an uppercase character
-		if idx > 0 && isDigit(s[idx-1]) {
-			idx--
-		}
-		b = append(b, s[:idx]...)
-
-		for idx < len(s) {
-			if !isAlphanumeric(s[idx]) {
-				idx++
-				continue
-			}
-
-			if len(b) > 0 {
-				b = append(b, underscorByte)
-			}
-
-			for idx < len(s) && (isUpper(s[idx]) || isDigit(s[idx])) {
-				b = append(b, toLower(s[idx]))
-				idx++
-			}
-
-			for idx < len(s) && (isLower(s[idx]) || isDigit(s[idx])) {
-				b = append(b, s[idx])
-				idx++
-			}
-		}
-		return string(b) // return manipulated string
+	if idx == len(s) {
+		return s // no changes needed, can just borrow the string
 	}
-	return s // no changes needed, can just borrow the string
+	// if we get here then we must need to manipulate the string
+	b := make([]byte, 0, 64)
+	// handles digit followed by an uppercase character
+	if idx > 0 && isDigit(s[idx-1]) {
+		idx--
+	}
+	b = append(b, s[:idx]...)
+
+	for idx < len(s) {
+		if !isAlphanumeric(s[idx]) {
+			idx++
+			continue
+		}
+
+		if len(b) > 0 {
+			b = append(b, underscorByte)
+		}
+
+		for idx < len(s) && (isUpper(s[idx]) || isDigit(s[idx])) {
+			b = append(b, toLower(s[idx]))
+			idx++
+		}
+
+		for idx < len(s) && (isLower(s[idx]) || isDigit(s[idx])) {
+			b = append(b, s[idx])
+			idx++
+		}
+	}
+	return string(b) // return manipulated string
 }
 
 func isAlphanumeric(c byte) bool {
