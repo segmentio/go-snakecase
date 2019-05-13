@@ -7,21 +7,34 @@ const underscorByte = '_'
 func Snakecase(s string) string {
 	idx := 0
 
+	for ; idx < len(s); idx++ {
+		if isAlphanumeric(s[idx]) {
+			break
+		}
+	}
+	s = s[idx:]
+	idx = 0
+
 	// loop through all good characters:
 	// - lowercase
 	// - digit
 	// - underscore (as long as the next character is lowercase or digit)
-	for idx < len(s) && ((isLower(s[idx]) || isDigit(s[idx])) || (s[idx] == underscorByte && idx < len(s)-1 && (isLower(s[idx+1]) || isDigit(s[idx+1])))) {
-		idx++
+	for ; idx < len(s); idx++ {
+		if (isLower(s[idx]) || isDigit(s[idx])) || (s[idx] == underscorByte && idx < len(s)-1 && (isLower(s[idx+1]) || isDigit(s[idx+1]))) {
+			continue
+		}
+		break
 	}
 
 	if idx == len(s) {
 		return s // no changes needed, can just borrow the string
 	}
+	//panic(s[0:idx])
 	// if we get here then we must need to manipulate the string
 	b := make([]byte, 0, 64)
-	// handles digit followed by an uppercase character
-	if idx > 0 && isDigit(s[idx-1]) {
+
+	// handles digit followed by an uppercase character, but only if the digit is not the leading character
+	if (idx == 1 && isDigit(s[idx-1])) || (idx > 1 && isDigit(s[idx-1]) && !isAlphanumeric(s[idx-2])) {
 		idx--
 	}
 	b = append(b, s[:idx]...)

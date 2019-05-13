@@ -58,3 +58,27 @@ func BenchmarkModifiedUnicode2(b *testing.B) {
 		Snakecase(s)
 	}
 }
+
+func BenchmarkLeadingUnderscoresDigitUpper(b *testing.B) {
+	var s = "_5TEst"
+	b.SetBytes(int64(len(s)))
+	for n := 0; n < b.N; n++ {
+		Snakecase(s)
+	}
+}
+
+func BenchmarkDigitUpper(b *testing.B) {
+	var s = "5TEst"
+	b.SetBytes(int64(len(s)))
+	for n := 0; n < b.N; n++ {
+		Snakecase(s)
+	}
+}
+
+func BenchmarkDigitUpper2(b *testing.B) {
+	var s = "lk0B@bFmjrLQ_Z6YL"
+	b.SetBytes(int64(len(s)))
+	for n := 0; n < b.N; n++ {
+		Snakecase(s)
+	}
+}
