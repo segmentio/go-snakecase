@@ -10,7 +10,8 @@ type sample struct {
 
 func TestSnakecase(t *testing.T) {
 	samples := []sample{
-		{"lk0B@bFmjrLQ_Z6YL", "lk0_b_b_fmjr_lq_z6yl"}, // lk_0b_b_fmjr_lq_z6yl
+		{"@49L0S145_¬fwHƒ0TSLNVp", "49l0s145_fw_h_0tslnvp"}, // 49_l0s145_fw_h_0tslnvp
+		{"lk0B@bFmjrLQ_Z6YL", "lk0_b_b_fmjr_lq_z6yl"},       // lk_0b_b_fmjr_lq_z6yl
 		{"samPLE text", "sam_ple_text"},
 		{"sample text", "sample_text"},
 		{"sample-text", "sample_text"},
@@ -36,6 +37,9 @@ func TestSnakecase(t *testing.T) {
 		{"5TEst", "5test"},
 		{"_5TEst", "5test"},
 		{"@%#&5TEst", "5test"},
+		{"edf_6N", "edf_6n"},
+		{"f_pX9", "f_p_x9"},   // f_px9
+		{"p_z9Rg", "p_z9_rg"}, // p_z9rg
 	}
 
 	for _, sample := range samples {
