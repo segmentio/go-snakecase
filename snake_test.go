@@ -10,8 +10,8 @@ type sample struct {
 
 func TestSnakecase(t *testing.T) {
 	samples := []sample{
-		{"@49L0S145_¬fwHƒ0TSLNVp", "49l0s145_fw_h_0tslnvp"}, // 49_l0s145_fw_h_0tslnvp
-		{"lk0B@bFmjrLQ_Z6YL", "lk0_b_b_fmjr_lq_z6yl"},       // lk_0b_b_fmjr_lq_z6yl
+		{"@49L0S145_¬fwHƒ0TSLNVp", "49l0s145_fw_h_0tslnvp"},
+		{"lk0B@bFmjrLQ_Z6YL", "lk0_b_b_fmjr_lq_z6yl"},
 		{"samPLE text", "sam_ple_text"},
 		{"sample text", "sample_text"},
 		{"sample-text", "sample_text"},
