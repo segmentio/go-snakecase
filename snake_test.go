@@ -38,8 +38,10 @@ func TestSnakecase(t *testing.T) {
 		{"_5TEst", "5test"},
 		{"@%#&5TEst", "5test"},
 		{"edf_6N", "edf_6n"},
-		{"f_pX9", "f_p_x9"},   // f_px9
-		{"p_z9Rg", "p_z9_rg"}, // p_z9rg
+		{"f_pX9", "f_p_x9"},
+		{"p_z9Rg", "p_z9_rg"},
+		{"2FA Enabled", "2fa_enabled"},
+		{"Enabled 2FA", "enabled_2fa"},
 	}
 
 	for _, sample := range samples {
